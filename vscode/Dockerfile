@@ -26,6 +26,7 @@ RUN apt-get update \
     && apt-get full-upgrade -y \
     && apt-get install -y --no-install-recommends \
     ack \
+    curl \
     direnv \
     libarchive-tools  \
     colordiff \
@@ -63,7 +64,9 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && loca
     update-locale LANG=en_US.UTF-8 && \
     curl https://bootstrap.pypa.io/get-pip.py | python3
 
-# Install code-server
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &\
+    apt-get install -y nodejs
+    # Install code-server
 WORKDIR /tmp/
 RUN curl -fsSL https://code-server.dev/install.sh | sh  -s -- --version ${CODE_SERVER_VERSION}
 
