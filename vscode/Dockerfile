@@ -14,7 +14,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base system
 ARG BUILD_ARCH=amd64
-ARG CODE_SERVER_VERSION="4.98.2"
+ARG CODE_SERVER_VERSION="4.102.3"
 ARG HA_CLI_VERSION="4.37.0"
 ARG VERSION_ID="12"
 
@@ -51,11 +51,11 @@ RUN apt-get update \
 WORKDIR /tmp/ps
 # hadolint ignore=DL3008
 RUN curl https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb --output packages-microsoft-prod.deb  \
+&&  curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 && dpkg -i packages-microsoft-prod.deb \
 && rm packages-microsoft-prod.deb \
 && apt-get update \
-&& apt-get update \
-&&  apt-get install -y powershell -y --no-install-recommends \
+&&  apt-get install -y powershell nodejs -y --no-install-recommends \
 && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
@@ -64,9 +64,7 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && loca
     update-locale LANG=en_US.UTF-8 && \
     curl https://bootstrap.pypa.io/get-pip.py | python3
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &\
-    apt-get install -y nodejs
-    # Install code-server
+
 WORKDIR /tmp/
 RUN curl -fsSL https://code-server.dev/install.sh | sh  -s -- --version ${CODE_SERVER_VERSION}
 
