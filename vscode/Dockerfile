@@ -56,7 +56,8 @@ RUN curl https://packages.microsoft.com/config/debian/12/packages-microsoft-prod
 && rm packages-microsoft-prod.deb \
 && apt-get update \
 &&  apt-get install -y powershell nodejs -y --no-install-recommends \
-&& rm -rf /var/lib/apt/lists/*
+&& rm -rf /var/lib/apt/lists/* \
+&& npm install -g npm-check-updates
 
 WORKDIR /tmp
 # System configuration
