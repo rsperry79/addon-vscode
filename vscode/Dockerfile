@@ -51,7 +51,7 @@ RUN apt-get update \
 WORKDIR /tmp/ps
 # hadolint ignore=DL3008
 RUN curl https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb --output packages-microsoft-prod.deb  \
-&&  curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+&&  curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
 && dpkg -i packages-microsoft-prod.deb \
 && rm packages-microsoft-prod.deb \
 && apt-get update \
